@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DoctorStatusController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DoctorStatusController::class, 'index'])->name('index');
