@@ -15,4 +15,4 @@ const switchPage = () => {
     }
 };
 
-setInterval(switchPage, 180000); // 180000 ms = 3 menit
+setInterval(switchPage, 60000); // 60000 ms = 1 menit

@@ -11,7 +11,7 @@ class DoctorStatusController extends Controller
         $doctors = doctorStatus::all();
 
         $doctors1 = $doctors->slice(0, 5);
-        $doctors2 = $doctors->slice(0, 5);
+        $doctors2 = $doctors->slice(5, 5);
 
         return view('dashboard', compact('doctors1', 'doctors2'));
     }

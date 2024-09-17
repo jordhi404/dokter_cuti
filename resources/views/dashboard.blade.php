@@ -7,47 +7,53 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Ini dashboard >:(</h1>
+    <div class="text-center" id="title">
+        <h1>On Duty Hari Ini</h1>
+    </div>
 
     <!-- Page 1 -->
-    <table class="page active" id="page1" border="1">
-        <thead>
-            <tr>
-                <th>Nama Dokter</th>
-                <th>Unit Praktik</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($doctors1 as $doctor)
+    <div class="page active" id="page1">
+        <table class="table-animated" border="1">
+            <thead>
                 <tr>
-                    <td>{{ $doctor->doctorName }}</td>
-                    <td>{{ $doctor->unit }}</td>
-                    <td>{{ $doctor->absentStatus }}</td>
-                </tr> 
-            @endforeach
-        </tbody>
-    </table>
-    
+                    <th>Nama Dokter</th>
+                    <th>Unit Praktik</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($doctors1 as $doctor)
+                    <tr>
+                        <td>{{ $doctor->doctorName }}</td>
+                        <td>{{ $doctor->unit }}</td>
+                        <td>{{ $doctor->absentStatus }}</td>
+                    </tr> 
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
     <!-- Page 2 -->
-    <table class="page" id="page2" border="1">
-        <thead>
-            <tr>
-                <th>Nama Dokter</th>
-                <th>Unit Praktik</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($doctors2 as $doctor)
+    <div class="page" id="page2">
+        <table class="table-animated" border="1">
+            <thead>
                 <tr>
-                    <td>{{ $doctor->doctorName }}</td>
-                    <td>{{ $doctor->unit }}</td>
-                    <td>{{ $doctor->absentStatus }}</td>
-                </tr> 
-            @endforeach
-        </tbody>
-    </table>
+                    <th>Nama Dokter</th>
+                    <th>Unit Praktik</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($doctors2 as $doctor)
+                    <tr>
+                        <td>{{ $doctor->doctorName }}</td>
+                        <td>{{ $doctor->unit }}</td>
+                        <td>{{ $doctor->absentStatus }}</td>
+                    </tr> 
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     <script src="script.js"></script>
 </body>
