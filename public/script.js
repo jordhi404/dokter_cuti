@@ -1,18 +1,22 @@
 // Set interval untuk mengganti halaman setiap 3 menit (180000 ms)
-let currentPage = 1;
-const switchPage = () => {
-    const page1 = document.getElementById('page1');
-    const page2 = document.getElementById('page2');
-    
-    if (currentPage === 1) {
-        page1.classList.remove('active');
-        page2.classList.add('active');
-        currentPage = 2;
-    } else {
-        page2.classList.remove('active');
-        page1.classList.add('active');
-        currentPage = 1;
-    }
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+
+const showSlide = (index) => {
+    slides.forEach((slide, i) => {
+        if (i === index) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
 };
 
-setInterval(switchPage, 60000); // 60000 ms = 1 menit
+showSlide(currentSlide);
+
+const switchSlide = () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+};
+
+setInterval(switchSlide, 10000); // 10000 ms = 10 detik

@@ -71,15 +71,21 @@ body {
     background-size: cover;
 }
 
-.page {
+.slide {
     display: none;
 }
 
-.active {
+.slider {
+    position: relative;
+    overflow: hidden;
+}
+
+.slide.active {
     display: table;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+    animation: slideDown 1s ease-in-out;
 }
 
 table {
@@ -103,10 +109,6 @@ th, td {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.table-animated {
-    animation: slideDown 1s ease-in-out;
 }
 
 .text-center {
