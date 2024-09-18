@@ -11,48 +11,31 @@
         <h1>On Duty Hari Ini</h1>
     </div>
 
-    <!-- Page 1 -->
-    <div class="page active" id="page1">
-        <table class="table-animated" border="1">
-            <thead>
-                <tr>
-                    <th>Nama Dokter</th>
-                    <th>Unit Praktik</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($doctors1 as $doctor)
-                    <tr>
-                        <td>{{ $doctor->doctorName }}</td>
-                        <td>{{ $doctor->unit }}</td>
-                        <td>{{ $doctor->absentStatus }}</td>
-                    </tr> 
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Page 2 -->
-    <div class="page" id="page2">
-        <table class="table-animated" border="1">
-            <thead>
-                <tr>
-                    <th>Nama Dokter</th>
-                    <th>Unit Praktik</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($doctors2 as $doctor)
-                    <tr>
-                        <td>{{ $doctor->doctorName }}</td>
-                        <td>{{ $doctor->unit }}</td>
-                        <td>{{ $doctor->absentStatus }}</td>
-                    </tr> 
-                @endforeach
-            </tbody>
-        </table>
+    <div class="slider" id="doctor-slider">
+        @foreach ($doctors->chunk(30) as $chunk)
+            <div class="slide">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kode Dokter</th>
+                            <th>Nama Dokter</th>
+                            <th>Tipe Poli</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($chunk as $doctor)
+                        <tr>
+                            <td>{{ $doctor['kddokter'] }}</td>
+                            <td>{{ $doctor['nama'] }}</td>
+                            <td>{{ $doctor['tipe_poli'] }}</td>
+                            <td>{{ $doctor['status'] }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endforeach
     </div>
 
     <script src="script.js"></script>

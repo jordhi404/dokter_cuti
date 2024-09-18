@@ -9,7 +9,9 @@ class doctorStatus extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'doctorName', 'unit', 'absentStatus'
-    ];
+    protected $table = 'dokter_slot';
+
+    public function doctor() {
+        return $this->belongsTo(doctor::class, 'kddokter', 'kode');
+    }
 }
