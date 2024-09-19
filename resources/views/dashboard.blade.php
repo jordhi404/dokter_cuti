@@ -8,34 +8,34 @@
 </head>
 <body>
     <div class="text-center" id="title">
-        <h1>On Duty Hari Ini</h1>
+        <h1>Info Dokter</h1>
     </div>
 
     <div class="slider" id="doctor-slider">
-        @foreach ($doctors->chunk(30) as $chunk)
+        @foreach ($doctors->chunk(10) as $chunk)
             <div class="slide">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Kode Dokter</th>
-                            <th>Nama Dokter</th>
-                            <th>Tipe Poli</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($chunk as $doctor)
-                        <tr>
-                            <td>{{ $doctor['kddokter'] }}</td>
-                            <td>{{ $doctor['nama'] }}</td>
-                            <td>{{ $doctor['tipe_poli'] }}</td>
-                            <td>{{ $doctor['status'] }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="doctor-cards">
+                    @foreach ($chunk as $doctor)
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ $doctor['nama'] }}</h4>
+                                <p class="card-text">{{ $doctor['tipe_poli'] }}</p>
+                                
+                                @if ($doctor['status'] === 'CUTI')
+                                    <span class="status-stamp status-cuti">CUTI</span>
+                                @else
+                                    <span class="status-stamp status-on-duty">ON DUTY</span>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         @endforeach
+    </div>
+
+    <div class="video-container">
+        <video autoplay loop muted width="100%" height="700" src="video/MCU_Gizi.mp4" type="video/mp4"></video>
     </div>
 
     <script src="script.js"></script>
