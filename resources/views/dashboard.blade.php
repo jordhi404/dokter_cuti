@@ -17,15 +17,20 @@
                 <div class="doctor-cards">
                     @foreach ($chunk as $doctor)
                         <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ $doctor['nama'] }}</h4>
-                                <p class="card-text">{{ $doctor['tipe_poli'] }}</p>
-                                
-                                @if ($doctor['status'] === 'CUTI')
-                                    <span class="status-stamp status-cuti">CUTI</span>
-                                @else
-                                    <span class="status-stamp status-on-duty">ON DUTY</span>
-                                @endif
+                            <div class="row">
+                                <div class="card-img">
+                                    <img src="picture/profile_pict.png" alt="profile">
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ $doctor['nama'] }}</h4>
+                                    <p class="card-text">{{ $doctor['tipe_poli'] }}</p>
+                                    
+                                    @if ($doctor['status'] === 'CUTI')
+                                        <span class="status-stamp status-cuti">CUTI</span>
+                                    @else
+                                        <span class="status-stamp status-on-duty">ON DUTY</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     @endforeach
