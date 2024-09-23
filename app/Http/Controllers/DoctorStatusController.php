@@ -13,11 +13,16 @@ class DoctorStatusController extends Controller
                 ->with('doctor')
                 ->orderBy('kddokter')
                 ->get()
+                ->groupBy('kddokter')
                 ->map(function ($status) {
                     return [
-                        'nama' => $status->doctor ? $status->doctor->nama : 'Tidak diketahui',
-                        'tipe_poli' => $status->tipe_poli,
-                        'status' => $status->qmax == 0 ? 'CUTI' : 'ON DUTY',
+                        'nama' => $status->first()->doctor ? $status->first()->doctor->nama : 'Tidak diketahui',
+                        'praktik' => $status->map(function($statuses) {
+                            return [
+                                'tipe_poli' => $statuses->tipe_poli,
+                                'status' => $statuses->qmax == 0 ? 'CUTI' : 'ON DUTY',
+                            ];
+                        })
                     ];
                 });
         // dd(now()->toDateString());

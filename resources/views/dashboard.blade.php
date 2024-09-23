@@ -23,13 +23,16 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $doctor['nama'] }}</h4>
-                                    <p class="card-text">{{ $doctor['tipe_poli'] }}</p>
-                                    
-                                    @if ($doctor['status'] === 'CUTI')
-                                        <span class="status-stamp status-cuti">CUTI</span>
-                                    @else
-                                        <span class="status-stamp status-on-duty">ON DUTY</span>
-                                    @endif
+
+                                    @foreach ($doctor['praktik'] as $praktik)
+                                        <p class="card-text">{{ $praktik['tipe_poli'] }} : 
+                                            @if ($praktik['status'] === 'CUTI')
+                                                <span class="status-stamp status-cuti">CUTI</span>
+                                            @else
+                                                <span class="status-stamp status-on-duty">ON DUTY</span>
+                                            @endif
+                                        </p>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
