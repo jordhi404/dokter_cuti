@@ -22,7 +22,7 @@
                                     @if (file_exists(public_path('profile_picture/' . $doctor['kode'] . '.jpg')))
                                         <img src="{{ asset('profile_picture/' .  $doctor['kode'] . '.jpg') }}" alt="{{ $doctor['nama'] }}">
                                     @else
-                                        <img src="{{ asset('profile_picture/doctor_default.jpg') }}" alt="{{ $doctor['nama'] }}">
+                                        <img src="{{ asset('profile_icon/profile_pict.png') }}" alt="{{ $doctor['nama'] }}">
                                     @endif
                                 </div>
                                 <div class="card-body">
