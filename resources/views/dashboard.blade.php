@@ -19,7 +19,11 @@
                         <div class="card">
                             <div class="row">
                                 <div class="card-img">
-                                    <img src="picture/profile_pict.png" alt="profile">
+                                    @if (file_exists(public_path('profile_picture/' . $doctor['kode'] . '.jpg')))
+                                        <img src="{{ asset('profile_picture/' .  $doctor['kode'] . '.jpg') }}" alt="{{ $doctor['nama'] }}">
+                                    @else
+                                        <img src="{{ asset('profile_picture/doctor_default.jpg') }}" alt="{{ $doctor['nama'] }}">
+                                    @endif
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $doctor['nama'] }}</h4>
