@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Info Dokter Cuti</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="text-center" id="title">
-        <h1>Info Dokter</h1>
+        <h1>Info Dokter Cuti</h1>
     </div>
 
     <div class="slider" id="doctor-slider">
