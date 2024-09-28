@@ -9,12 +9,14 @@ class DoctorStatusController extends Controller
     public function index() {
         $doctors = doctorStatus::whereDate('tanggal', '=', now())
                 ->where('tipe_poli', '<>', 'EXECUTIVE')
-                ->whereNotIn('kddokter', [
-                        '02015', 'DT01', 'DUAG1', 'DUAG2', 'DUAG3', 'DUKIM', 'DUKOS', 
-                        'DUPC2', 'DUPS1', 'DUPS3', 'PS001', 'DUPU1', 'DUPU2', 'DUKIA'
-                    ])
-                ->whereHas('doctor')
-                ->with('doctor')
+                ->whereHas('doctor', function($query) {
+                    $query->whereNotIn('keterangan', [
+                                'UMUM', 'DOKTER UMUM', 'DOKTER PCR', 'AHLI GIZI', 'PETUGAS MEDIS', 'BIDAN', 'DIETIZIEN', 'FISIOTERAPI', 'KIA', 'PLRS'
+                    ]);
+                })
+                ->with(['doctor' => function($query) {
+                    $query->select('kode', 'nama', 'keterangan');
+                }])
                 ->orderBy('kddokter')
                 ->get()
                 ->groupBy('kddokter')
@@ -27,11 +29,12 @@ class DoctorStatusController extends Controller
                                 'tipe_poli' => $statuses->tipe_poli,
                                 'status' => $statuses->qmax == 0 ? 'CUTI' : 'ON DUTY',
                             ];
-                        })
+                        }),
+                        'keterangan' => $status->first()->doctor ? $status->first()->doctor->keterangan : 'Tidak diketahui',
                     ];
                 });
         // dd(now()->toDateString());
-        //dd($doctors);
+        // dd($doctors);
         return view('dashboard', ['doctors' => $doctors]);
     }
 }
