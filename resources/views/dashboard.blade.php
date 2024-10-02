@@ -30,7 +30,7 @@
                                     <h4 class="card-title">{{ $doctor['nama'] }}</h4>
 
                                     @foreach ($doctor['praktik'] as $praktik)
-                                        <p class="card-text">{{ $praktik['tipe_poli'] }} : 
+                                        <p class="card-text"><strong>{{ $praktik['tipe_poli'] }} :</strong> 
                                             @if ($praktik['status'] === 'CUTI')
                                                 <span class="status-stamp status-cuti">CUTI</span>
                                             @else
