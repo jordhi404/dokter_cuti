@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\doctorStatus;
 
-class DoctorStatusController extends Controller
+class Non_regulerDoctorStatusController extends Controller
 {
     public function index() {
         $doctors = doctorStatus::whereDate('tanggal', '=', now())
-                ->where('tipe_poli', '<>', 'EXECUTIVE')
+                ->where('tipe_poli', '=', 'NON_REGULER')
                 ->whereHas('doctor', function($query) {
                     $query->whereNotIn('keterangan', [
                                 'UMUM', 'DOKTER UMUM', 'DOKTER PCR', 'AHLI GIZI', 'PETUGAS MEDIS', 'BIDAN', 'DIETIZIEN', 'FISIOTERAPI', 'KIA', 'PLRS'
                     ]);
                 })
                 ->with(['doctor' => function($query) {
-                    $query->select('kode', 'nama', 'keterangan');
+                    $query->select('kode', 'nama', 'keterangan', 'ket1');
                 }])
                 ->orderBy('kddokter')
                 ->get()
@@ -24,9 +24,9 @@ class DoctorStatusController extends Controller
                     return [
                         'kode' => $status->first()->kddokter,
                         'nama' => $status->first()->doctor ? $status->first()->doctor->nama : 'Tidak diketahui',
+                        'spesialisasi' => $status->first()->doctor ?  $status->first()->doctor->ket1 : 'Tidak diketahui',
                         'praktik' => $status->map(function($statuses) {
                             return [
-                                'tipe_poli' => $statuses->tipe_poli,
                                 'status' => $statuses->qmax == 0 ? 'CUTI' : 'ON DUTY',
                             ];
                         }),
@@ -35,6 +35,6 @@ class DoctorStatusController extends Controller
                 });
         // dd(now()->toDateString());
         // dd($doctors);
-        return view('dashboard', ['doctors' => $doctors]);
+        return view('nonReguler', ['doctors' => $doctors]);
     }
 }

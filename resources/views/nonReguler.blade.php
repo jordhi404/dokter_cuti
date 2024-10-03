@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info Dokter Cuti</title>
+    <title>Praktik Non Reguler</title>
     <link rel="icon" href="{{ asset('profile_icon/logo_rs.jpg') }}" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="text-center" id="title">
-        <h1>Info Dokter Cuti</h1>
+        <h1>Info Dokter Cuti (Non Reguler)</h1>
     </div>
 
     <div class="slider" id="doctor-slider">
-        @foreach ($doctors->chunk(10) as $chunk)
+        @foreach ($doctors->chunk(8) as $chunk)
             <div class="slide">
                 <div class="doctor-cards">
                     @foreach ($chunk as $doctor)
@@ -28,17 +28,10 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $doctor['nama'] }}</h4>
+                                    <p>{{ $doctor['spesialisasi'] }}</p>
 
                                     @foreach ($doctor['praktik'] as $praktik)
                                         <p class="card-text">
-                                            <strong>
-                                                @if ($praktik['tipe_poli'] === 'REGULER')
-                                                    PRAKTIK PAGI
-                                                @else 
-                                                    PRAKTIK SORE
-                                                @endif
-                                                :
-                                            </strong> 
                                             @if ($praktik['status'] === 'CUTI')
                                                 <span class="status-stamp status-cuti">CUTI</span>
                                             @else

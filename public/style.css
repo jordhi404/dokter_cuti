@@ -83,11 +83,17 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-top: 2%;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+}
+
+.card-body p {
+    margin-bottom: 5px;
+    font-size: 23px;
+    font-weight: bold;
 }
 
 .card-text {
-    margin: 5px 0;
+    margin: 2px;
     font-size: 24px;
 }
 
