@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="text-center" id="title">
-        <h1>Info Dokter Cuti (Reguler)</h1>
+        <h1>Info Dokter Hari Ini (Reguler)</h1>
     </div>
 
     <div class="slider" id="doctor-slider">
