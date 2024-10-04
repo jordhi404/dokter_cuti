@@ -28,12 +28,11 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $doctor['nama'] }}</h4>
-                                    <p>{{ $doctor['keterangan'] }}</p>
                                     <p class="card-text">
                                         @if ($doctor['cuti_start'] == $doctor['cuti_end'])
-                                            {{ $doctor['cuti_start'] }}
+                                            CUTI PADA TANGGAL {{ $doctor['cuti_start'] }}
                                         @else
-                                            {{ $doctor['cuti_start'] }} s/d {{ $doctor['cuti_end'] }}
+                                            CUTI DARI TANGGAL {{ $doctor['cuti_start'] }} s/d {{ $doctor['cuti_end'] }}
                                         @endif
                                     </p>
                                 </div>

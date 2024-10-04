@@ -57,11 +57,11 @@ body {
 }
 
 .card-img {
-    width: 20%;
+    width: 40%;
     height: max-content;
     overflow: hidden;
     border-radius: 100%;
-    border: 1px solid black;
+    border: 3px solid black;
     margin: 5px;
     margin-top: 10px;
 }
@@ -84,18 +84,18 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-top: 2%;
-    margin-bottom: 0;
+    margin-bottom: 15px;
 }
 
 .card-body p {
     margin-bottom: 5px;
     font-size: 23px;
-    font-weight: bold;
 }
 
 .card-text {
-    margin-top: 2px;
+    margin-top: 10px;
     font-size: 24px;
+    font-weight: bold;
 }
 
 .status-stamp {

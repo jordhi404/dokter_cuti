@@ -9,7 +9,7 @@ class offDatesController extends Controller
     public function offDatesIndex() {
         $doctors = doctorStatus::where('qmax', 0)
                 ->where('tanggal', '>=', now()->subMonth())  // Tanggal dari sebulan yang lalu
-                ->where('tanggal', '>', now())               // Hanya menampilkan cuti setelah hari ini
+                ->where('tanggal', '>=', today())              // Hanya menampilkan cuti hari ini sampai setelahnya
                 ->where('tipe_poli', '<>', 'EXECUTIVE')      // Mengecualikan tipe_poli EXECUTIVE
                 ->whereHas('doctor', function ($query) {
                     $query->whereNotIn('keterangan', [
