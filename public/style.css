@@ -9,6 +9,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    font-family: sans-serif;
 }
 
 .slider {
@@ -83,7 +84,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-top: 2%;
-    margin-bottom: 2px;
+    margin-bottom: 0;
 }
 
 .card-body p {
@@ -93,7 +94,7 @@ body {
 }
 
 .card-text {
-    margin: 2px;
+    margin-top: 2px;
     font-size: 24px;
 }
 

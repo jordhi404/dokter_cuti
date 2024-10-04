@@ -6,7 +6,7 @@ use App\Models\doctorStatus;
 
 class RegulerDoctorStatusController extends Controller
 {
-    public function index() {
+    public function regulerIndex() {
         $doctors = doctorStatus::whereDate('tanggal', '=', now())
                 ->where('tipe_poli', '=', 'REGULER')
                 ->whereHas('doctor', function($query) {
