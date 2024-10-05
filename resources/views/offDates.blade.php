@@ -28,13 +28,17 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $doctor['nama'] }}</h4>
-                                    <p class="card-text">
-                                        @if ($doctor['cuti_start'] == $doctor['cuti_end'])
-                                            CUTI PADA TANGGAL {{ $doctor['cuti_start'] }}
-                                        @else
-                                            CUTI DARI TANGGAL {{ $doctor['cuti_start'] }} s/d {{ $doctor['cuti_end'] }}
-                                        @endif
-                                    </p>
+
+                                    {{-- Loop untuk menampilkan setiap periode cuti --}}
+                                    @foreach ($doctor['periods'] as $period)
+                                        <p class="card-text">
+                                            @if ($period['cuti_start'] == $period['cuti_end'])
+                                                CUTI PADA TANGGAL {{ $period['cuti_start'] }}
+                                            @else
+                                                CUTI DARI TANGGAL {{ $period['cuti_start'] }} s/d {{ $period['cuti_end'] }}
+                                            @endif
+                                        </p>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -43,6 +47,7 @@
             </div>
         @endforeach
     </div>
+
 
     <div class="video-container">
         <video autoplay loop muted width="100%" height="700" src="video/MCU_Gizi.mp4" type="video/mp4"></video>
