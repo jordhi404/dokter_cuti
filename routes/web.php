@@ -11,4 +11,4 @@ Route::get('/non-reguler', [Non_regulerDoctorStatusController::class, 'nonRegule
 
 Route::get('/', [theDoctorStatusController::class, 'index'])->name('index');
 
-Route::get('/offdates', [offDatesController::class, 'offDatesIndex'])->name('offDatesIndex');
+Route::get('/offdates', [offDatesController::class, 'processDoctorOffDates'])->name('offDatesIndex');

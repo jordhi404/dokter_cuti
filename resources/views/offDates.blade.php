@@ -13,7 +13,7 @@
     </div>
 
     <div class="slider" id="doctor-slider">
-        @foreach ($doctors->chunk(8) as $chunk)
+        @foreach ($processedDoctors->chunk(8) as $chunk)
             <div class="slide">
                 <div class="doctor-cards">
                     @foreach ($chunk as $doctor)
@@ -29,16 +29,14 @@
                                 <div class="card-body">
                                     <h4 class="card-title">{{ $doctor['nama'] }}</h4>
 
-                                    {{-- Loop untuk menampilkan setiap periode cuti --}}
-                                    @foreach ($doctor['periods'] as $period)
+                                    {{-- Menampilkan tanggal cuti yang sudah diformat --}}
+                                    @if(!empty($doctor['formattedCuti']))
                                         <p class="card-text">
-                                            @if ($period['cuti_start'] == $period['cuti_end'])
-                                                CUTI PADA TANGGAL {{ $period['cuti_start'] }}
-                                            @else
-                                                CUTI DARI TANGGAL {{ $period['cuti_start'] }} s/d {{ $period['cuti_end'] }}
-                                            @endif
+                                            {!! $doctor['formattedCuti'] !!}
                                         </p>
-                                    @endforeach
+                                    @else
+                                        <p class="card-text">TIDAK ADA CUTI TERDAFTAR BULAN INI.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
