@@ -34,7 +34,7 @@ body {
 .text-center {
     margin: 20px;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .doctor-cards {
@@ -122,16 +122,14 @@ body {
 
 .video-container {
     margin-top: 5px;
-    margin-bottom: 0;
-    padding: 20px;
-    padding-bottom: 0;
     width: 95%;
     position: relative;
 }
 
 .video-container video {
-    max-width: 100%;
+    width: 80%;
     border-radius: 8px;
+    margin-left: 10%;
     display: block;
 }
 
@@ -148,25 +146,10 @@ body {
 
 /* Media Queries */
 
-/* Small screens (mobile) */
-@media (max-width: 600px) {
-    .card {
-        width: 100%; /* Full-width cards */
-    }
-}
-
 /* Medium screens (tablets) */
 @media (min-width: 601px) and (max-width: 1024px) {
     .card {
-        width: 48%; /* Two-column layout */
-        margin: 10px 1%;
-    }
-}
-
-/* Large screens (desktops) */
-@media (min-width: 1025px) {
-    .card {
-        width: 30%; /* Three-column layout */
+        width: 38%; /* Two-column layout */
         margin: 10px 1%;
     }
 }

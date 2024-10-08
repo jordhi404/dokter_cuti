@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="text-center" id="title">
-        <h1>Info Cuti Dokter</h1>
+        <h1>INFO CUTI DOKTER</h1>
     </div>
 
     <div class="slider" id="doctor-slider">
-        @foreach ($processedDoctors->chunk(8) as $chunk)
+        @foreach ($processedDoctors->chunk(6) as $chunk)
             <div class="slide">
                 <div class="doctor-cards">
                     @foreach ($chunk as $doctor)
