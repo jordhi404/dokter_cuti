@@ -9,6 +9,8 @@
 </head>
 <body>
     <div class="text-center" id="title">
+        <img class="logo floatLeft" src="profile_icon/doctor_male.png" alt="doctor_male_icon">
+        <img class="logo floatRight" src="profile_icon/doctor_female.png" alt="doctor_female_icon">
         <h1>INFO CUTI DOKTER</h1>
     </div>
 
@@ -48,7 +50,7 @@
 
 
     <div class="video-container">
-        <video autoplay loop muted width="100%" height="700" src="video/MCU_Gizi.mp4" type="video/mp4"></video>
+        <video autoplay loop muted width="100%" height="650" src="video/MCU_Gizi.mp4" type="video/mp4"></video>
     </div>
 
     <script src="script.js"></script>
