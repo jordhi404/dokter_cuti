@@ -15,7 +15,7 @@
     </div>
 
     <div class="slider" id="doctor-slider">
-        @foreach ($processedDoctors->chunk(6) as $chunk)
+        @foreach ($processedDoctors->chunk(8) as $chunk)
             <div class="slide">
                 <div class="doctor-cards">
                     @foreach ($chunk as $doctor)

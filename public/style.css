@@ -70,6 +70,10 @@ body {
     padding-top: 2px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px;
+    overflow: hidden;
 }
 
 .row {
@@ -77,12 +81,12 @@ body {
 }
 
 .card-img {
-    width: 40%;
-    height: max-content;
+    width: 100px;
+    height: 85px;
     overflow: hidden;
-    border-radius: 100%;
+    border-radius: 50%;
     border: 3px solid black;
-    margin: 5px;
+    margin-left: 2px;
     margin-top: 10px;
 }
 
@@ -94,22 +98,24 @@ body {
 
 .card-body {
     display: flex;
-    flex-grow: 1;
+    /* flex-grow: 1; */
     flex-direction: column;
     align-items: flex-start;
     margin-left: 5px;
 }
 
 .card-title {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
-    margin-top: 2%;
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 .card-body p {
     margin-bottom: 5px;
-    font-size: 23px;
+    font-size: 20px;
 }
 
 .card-text {
