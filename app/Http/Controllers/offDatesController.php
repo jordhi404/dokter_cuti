@@ -81,10 +81,37 @@ class offDatesController extends Controller
 
             // Jika tidak ada periode valid, dokter ini tidak akan ditampilkan
             if (count($filteredPeriods) > 0) {
-                // Format periode cuti menggunakan method formatCutiPeriods
-                $formattedCuti = $this->formatCutiPeriods($filteredPeriods);
-                $doctor['formattedCuti'] = $formattedCuti;
-                return $doctor;
+                // Pisahkan periode menjadi "Cuti Hari Ini" dan "Cuti yang Akan Datang"
+                $cutiHariIni = [];
+                $cutiAkanDatang = [];
+                $today = Carbon::today();
+    
+                foreach ($filteredPeriods as $period) {
+                    $start = Carbon::parse($period['cuti_start']);
+                    $end = Carbon::parse($period['cuti_end']);
+    
+                    if ($start->lte($today) && $end->gte($today)) {
+                        // Periode cuti mencakup hari ini
+                        $cutiHariIni[] = $period;
+                    } else {
+                        // Periode cuti belum mencakup hari ini
+                        $cutiAkanDatang[] = $period;
+                    }
+                }
+    
+                // Format periode cuti
+                $formattedCutiHariIni = !empty($cutiHariIni) ? $this->formatCutiPeriods($cutiHariIni) : null;
+                $formattedCutiAkanDatang = !empty($cutiAkanDatang) ? $this->formatCutiPeriods($cutiAkanDatang) : null;
+    
+                return [
+                    'kode' => $doctor['kode'],
+                    'nama' => $doctor['nama'],
+                    'keterangan' => $doctor['keterangan'],
+                    'cuti_hari_ini' => $cutiHariIni,
+                    'formattedCutiHariIni' => $formattedCutiHariIni,
+                    'cuti_akan_datang' => $cutiAkanDatang,
+                    'formattedCutiAkanDatang' => $formattedCutiAkanDatang,
+                ];
             }
 
             return null; // Kembalikan null jika tidak ada periode yang valid
