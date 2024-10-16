@@ -3,20 +3,25 @@ body {
     margin: 0;
     padding: 20px;
     padding-bottom: 0;
-    background-image: url("bg/bg_sample.jpg");
+    background: linear-gradient(rgb(110, 254, 134), rgb(155, 205, 255),  rgb(240, 190, 190));
     background-attachment: fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
     height: 100vh;
     font-family: sans-serif;
+    overflow: hidden;
 }
 
 .slider {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 700px;
+    height: 400px;
+}
+
+#doctor-slider-cuti-hari-ini {
+    max-height: 200px;
 }
 
 .slide {
@@ -49,7 +54,7 @@ body {
 }
 
 .text-center {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     margin-top: 0;
     text-align: center;
     font-size: 18px;
@@ -115,7 +120,7 @@ body {
 
 .card-body p {
     margin-bottom: 5px;
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .card-text {
@@ -123,30 +128,8 @@ body {
     font-size: 24px;
 }
 
-/* .status-stamp {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.status-cuti {
-    background-color: #fff;
-    color: red;
-    border: 2px solid darkred;
-}
-
-.status-on-duty {
-    background-color: #fff;
-    color: green;
-    border: 2px solid darkgreen;
-} */
-
 .video-container {
-    margin-top: 10px;
-    width: 95%;
+    margin-top: 5px;
     position: relative;
 }
 
@@ -155,6 +138,55 @@ body {
     border-radius: 8px;
     margin-left: 10%;
     display: block;
+}
+
+/* Warna Batas Kartu */
+.card.on-leave-today {
+    border-color: #ff4d4d; /* Merah untuk cuti */
+}
+
+.card.will-on-leave {
+    border-color: #4CAF50; /* Hijau untuk tidak cuti */
+}
+
+/* Badge */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.on-leave-badge {
+    background-color: #ff4d4d; /* Merah */
+}
+
+.not-on-leave-badge {
+    background-color: #4CAF50; /* Hijau */
+}
+
+/* Seksi Dokter */
+.doctor-section {
+    margin: 5px;
+}
+
+.leave-category {
+    margin-bottom: 10px;
+}
+
+.leave-category h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
 }
 
 @keyframes slideDown {
@@ -170,7 +202,7 @@ body {
 
 /* Media Queries */
 
-/* Medium screens (tablets) */
+/* orientation: Portrait */
 @media (min-width: 601px) and (max-width: 1024px) {
     .card {
         width: 38%; /* Two-column layout */
