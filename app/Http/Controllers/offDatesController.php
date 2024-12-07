@@ -4,33 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\doctorStatus;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Request;
+
+use function Ramsey\Uuid\v1;
 
 class offDatesController extends Controller
 {
-    public function getDoctorOffDates() {
+    private function getDoctorOffDates() {
         // Menyiapkan variabel untuk menyimpan data cuti
         $doctors = doctorStatus::where('qmax', 0)
-            ->where('tipe_poli', '<>', 'EXECUTIVE')
-            ->whereMonth('tanggal', '=', now()->month)
-            ->whereYear('tanggal', '=', now()->year)
+            ->whereNotIn('tipe_poli', ['EXECUTIVE', 'NON_REGULER'])
+            ->whereMonth('tanggal', now()->month)
+            ->whereYear('tanggal', now()->year)
             ->whereHas('doctor', function ($query) {
                 $query->whereNotIn('keterangan', [
                     'UMUM', 'DOKTER UMUM', 'DOKTER PCR', 'AHLI GIZI', 'PETUGAS MEDIS', 'BIDAN',
-                    'DIETIZIEN', 'FISIOTERAPI', 'KIA', 'PLRS'
+                    'DIETIZIEN', 'FISIOTERAPI', 'KIA', 'PLRS', 'PSIKOLOG', 'DOKTER SP RADIOLOGI'
                 ]);
             })
-            ->with('doctor')
-            ->orderBy('kddokter')
-            ->orderBy('tanggal')
+            ->join('dokter_tmp', 'dokter_slot.kddokter', '=', 'dokter_tmp.kode') // Join ke tabel dokter_tmp
+            ->orderBy('dokter_tmp.nama')  // Urutkan berdasarkan nama di tabel dokter_tmp
+            ->orderBy('tanggal')  // Urutkan juga berdasarkan tanggal
+            ->select('dokter_slot.*')  // Pastikan memilih kolom dari tabel utama (doctorStatus)
+            ->with('doctor')  // Eager load relasi dengan model doctor
             ->get();
 
         return $doctors;
     }
     
-    public function processDoctorOffDates() {
+    public function processDoctorOffDates()
+    {
         $doctors = $this->getDoctorOffDates();
+        $today = Carbon::today();
 
-        $processedDoctors = $doctors->groupBy('kddokter')->map(function ($doctorGroup) {
+        // Proses data untuk mengelompokkan periode cuti berdasarkan dokter
+        $processedDoctors = $doctors->groupBy('kddokter')->map(function ($doctorGroup) use ($today) {
             $groupedPeriods = [];
             $previousDate = null;
             $groupStartDate = null;
@@ -38,25 +46,21 @@ class offDatesController extends Controller
             foreach ($doctorGroup as $status) {
                 $currentDate = Carbon::parse($status->tanggal);
 
-                // Mulai grup baru jika tidak ada tanggal sebelumnya atau jika tanggal sekarang tidak berurutan dengan yang sebelumnya.
+                // Mulai grup baru jika tanggal tidak berurutan
                 if (!$previousDate || $previousDate->diffInDays($currentDate) > 1) {
                     if ($groupStartDate) {
-                        // Simpan grup sebelumnya sebelum memulai yang baru.
                         $groupedPeriods[] = [
                             'cuti_start' => $groupStartDate->toDateString(),
                             'cuti_end' => $previousDate->toDateString(),
                         ];
                     }
-
-                    // Inisialisasi grup baru.
                     $groupStartDate = $currentDate;
                 }
 
-                // Simpan tanggal sebelumnya.
                 $previousDate = $currentDate;
             }
 
-            // Simpan grup terakhir.
+            // Simpan grup terakhir
             if ($groupStartDate) {
                 $groupedPeriods[] = [
                     'cuti_start' => $groupStartDate->toDateString(),
@@ -72,101 +76,62 @@ class offDatesController extends Controller
             ];
         });
 
-        // Menyaring periode cuti yang belum selesai.
-        $processedDoctors = $processedDoctors->map(function ($doctor) {
-            // Filter untuk menghilangkan periode yang sudah lewat
-            $filteredPeriods = collect($doctor['cuti'])->filter(function ($period) {
-                return Carbon::parse($period['cuti_end'])->isToday() || Carbon::parse($period['cuti_end'])->isFuture();
-            })->values()->all(); // Mengatur ulang indeks
+        // Pisahkan dokter yang sedang cuti hari ini dan yang akan cuti
+        $cutiHariIni = [];
+        $cutiAkanDatang = [];
 
-            // Jika tidak ada periode valid, dokter ini tidak akan ditampilkan
-            if (count($filteredPeriods) > 0) {
-                // Pisahkan periode menjadi "Cuti Hari Ini" dan "Cuti yang Akan Datang"
-                $cutiHariIni = [];
-                $cutiAkanDatang = [];
-                $today = Carbon::today();
-    
-                foreach ($filteredPeriods as $period) {
-                    $start = Carbon::parse($period['cuti_start']);
-                    $end = Carbon::parse($period['cuti_end']);
-    
-                    if ($start->lte($today) && $end->gte($today)) {
-                        // Periode cuti mencakup hari ini
-                        $cutiHariIni[] = $period;
-                    } else {
-                        // Periode cuti belum mencakup hari ini
-                        $cutiAkanDatang[] = $period;
-                    }
-                }
-    
-                // Format periode cuti
-                $formattedCutiHariIni = !empty($cutiHariIni) ? $this->formatCutiPeriods($cutiHariIni) : null;
-                $formattedCutiAkanDatang = !empty($cutiAkanDatang) ? $this->formatCutiPeriods($cutiAkanDatang) : null;
-    
-                return [
+        // Pisahkan cuti hari ini dan yang akan datang
+        $processedDoctors->each(function ($doctor) use (&$cutiHariIni, &$cutiAkanDatang, $today) {
+            // Filter untuk cuti hari ini
+            $cutiHariIniDoctor = collect($doctor['cuti'])->filter(function ($period) use ($today) {
+                $start = Carbon::parse($period['cuti_start']);
+                $end = Carbon::parse($period['cuti_end']);
+                return $start->lte($today) && $end->gte($today);
+            })->values();
+
+            // Filter untuk cuti yang akan datang
+            $cutiAkanDatangDoctor = collect($doctor['cuti'])->filter(function ($period) use ($today) {
+                $start = Carbon::parse($period['cuti_start']);
+                return $start->isAfter($today);
+            })->values();
+
+            // Tambahkan dokter dengan cuti hari ini
+            if ($cutiHariIniDoctor->isNotEmpty()) {
+                $cutiHariIni[] = [
                     'kode' => $doctor['kode'],
                     'nama' => $doctor['nama'],
                     'keterangan' => $doctor['keterangan'],
-                    'cuti_hari_ini' => $cutiHariIni,
-                    'formattedCutiHariIni' => $formattedCutiHariIni,
-                    'cuti_akan_datang' => $cutiAkanDatang,
-                    'formattedCutiAkanDatang' => $formattedCutiAkanDatang,
+                    'cuti' => $cutiHariIniDoctor
                 ];
             }
 
-            return null; // Kembalikan null jika tidak ada periode yang valid
-        })->filter()->values(); // Filter untuk membuang null entries
+            // Tambahkan dokter dengan cuti yang akan datang
+            if ($cutiAkanDatangDoctor->isNotEmpty()) {
+                $cutiAkanDatang[] = [
+                    'kode' => $doctor['kode'],
+                    'nama' => $doctor['nama'],
+                    'keterangan' => $doctor['keterangan'],
+                    'cuti' => $cutiAkanDatangDoctor
+                ];
+            }
+        });
 
-        // dd($processedDoctors);
+        // Struktur data yang akan dikembalikan
+        $result = [
+            'cuti_hari_ini' => $cutiHariIni,
+            'cuti_akan_datang' => $cutiAkanDatang
+        ];
 
-        // Mengirim data ke view
-        return view('offDates', compact('processedDoctors'));
+        // Kembalikan data sebagai JSON
+        return response()->json($result);
     }
 
-    /**
-     * Format periode cuti sesuai dengan keinginan.
-     *
-     * @param array $periods
-     * @return string
-     */
-    private function formatCutiPeriods($periods)
-    {
-        $formattedCutiParts = [];
-        $monthYear = null;
 
-        foreach ($periods as $period) {
-            $start = Carbon::parse($period['cuti_start']);
-            $end = Carbon::parse($period['cuti_end']);
-
-            if (!$monthYear) {
-                $monthYear = $start->translatedFormat('F Y');
-            }
-
-            // Cek apakah tanggal mulai dan akhir sama
-            if ($start->eq($end)) {
-                $formattedCutiParts[] = $start->translatedFormat('d');
-            } else {
-                $formattedCutiParts[] = $start->translatedFormat('d') . ' - ' . $end->translatedFormat('d');
-            }
-        }
-
-        // Menggabungkan bagian-bagian yang sudah diformat
-        $formattedCuti = [];
-        $count = count($formattedCutiParts);
-
-        foreach ($formattedCutiParts as $index => $part) {
-            // Jika ini adalah bagian terakhir dan lebih dari satu bagian
-            if ($count > 1 && $index == $count - 1) {
-                $formattedCuti[] = 'dan ' . $part; // Menambahkan 'dan' sebelum elemen terakhir
-            } else {
-                $formattedCuti[] = $part; // Menambahkan bagian yang diformat
-            }
-        }
-
-        // Menggabungkan dengan koma
-        $output = implode(', ', $formattedCuti);
-        
-        // Menambahkan prefiks 'CUTI PADA TANGGAL' pada hasil akhir
-        return 'CUTI PADA TANGGAL ' . $output . ' ' . $monthYear;
+    public function showDoctorOffDates() {
+        // Ambil data dokter cuti yang sudah diproses
+        $doctors = $this->processDoctorOffDates(); // Memanggil langsung proses data
+    
+        // Kirim data ke View
+        return view('offDates', compact('doctors'));
     }
 }

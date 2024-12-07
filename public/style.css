@@ -3,25 +3,28 @@ body {
     margin: 0;
     padding: 20px;
     padding-bottom: 0;
-    background: linear-gradient(rgb(110, 254, 134), rgb(155, 205, 255),  rgb(240, 190, 190));
+    background: linear-gradient(30deg, #f0bbe3,#88d4fa,#88d4fa);
     background-attachment: fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    font-family: sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
+    border: 2px solid white;
+}
+
+.doctor-section {
+    margin-top: 10px;
 }
 
 .slider {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 400px;
-}
-
-#doctor-slider-cuti-hari-ini {
-    max-height: 200px;
+    height: auto;
+    max-height: 40vh;
+    margin-bottom: 10px;
 }
 
 .slide {
@@ -36,63 +39,91 @@ body {
     flex-direction: column;
 }
 
-.logo {
-    width: 100px;
-    height: 90px;
-}
-
+/* Bagian title page */
 .floatLeft {
     float: left;
-    margin-left: 10rem;
+    margin-left: 5rem;
     margin-right: 0;
+    width: 100px;
+    height: 100px;
 }
 
 .floatRight {
     float:right;
-    margin-right: 10rem;
+    margin-right: 5rem;
     margin-left: 0;
+    width: 130px;
+    height: 100px;
 }
 
 .text-center {
     margin-bottom: 5px;
-    margin-top: 0;
+    margin-top: 10px;
     text-align: center;
-    font-size: 18px;
 }
 
+#title-text {
+    display: inline-block;
+    padding: 5px 30px;
+    margin-left: 35px;
+    border-radius: 70px;
+    color: #fff;
+    margin-top: 10px;
+    background: linear-gradient(rgb(0, 124, 248), rgb(0, 93, 185));
+    font-size: 28px;
+}
+
+#date-text {
+    margin: 0;
+    padding: 0;
+    margin-left: 40px;
+    margin-right: 40px;  
+    color: rgb(0, 93, 185); 
+    font-size: 20px;
+    text-align: center;
+}
+
+/* Kartu dokter */
 .doctor-cards {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     justify-content: space-evenly;
+    gap: 10px;
 }
 
 .card {
-    background-color: #fff;
-    border: 2px solid #dddddd;
-    border-radius: 8px;
+    background: linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185));
+    border: 5px solid #dddddd;
+    border-radius: 20px;
+    box-sizing: border-box;
     padding: 10px;
     padding-top: 2px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    width: 100%;
+    width: 95%;
     max-width: 500px;
+    height: 120px;
     margin: 10px;
     overflow: hidden;
 }
 
 .row {
     display: flex;
+    margin: 0;
+    padding: 0;
+    margin-top: 2px;
+    height: auto;
 }
 
 .card-img {
-    width: 100px;
-    height: 85px;
+    width: 110px;
+    height: 90px;
     overflow: hidden;
-    border-radius: 50%;
-    border: 3px solid black;
+    border-radius: 100%;
+    border: 2px solid whitesmoke;
     margin-left: 2px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .card-img img {
@@ -103,81 +134,44 @@ body {
 
 .card-body {
     display: flex;
-    /* flex-grow: 1; */
+    flex-grow: 1;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .card-title {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bold;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     white-space: normal;
     word-wrap: break-word;
-}
-
-.card-body p {
-    margin-bottom: 5px;
-    font-size: 19px;
-}
-
-.card-text {
-    margin-top: 10px;
-    font-size: 24px;
-}
-
-.video-container {
-    margin-top: 5px;
-    position: relative;
-}
-
-.video-container video {
-    width: 80%;
-    border-radius: 8px;
-    margin-left: 10%;
-    display: block;
+    color: #f2ef45;
 }
 
 /* Warna Batas Kartu */
 .card.on-leave-today {
-    border-color: #ff4d4d; /* Merah untuk cuti */
-}
-
-.card.will-on-leave {
-    border-color: #4CAF50; /* Hijau untuk tidak cuti */
+    border-color: #ffffff;
 }
 
 /* Badge */
 .badge {
     display: inline-block;
-    padding: 5px 10px;
+    padding: 5px 0;
     border-radius: 12px;
-    font-size: 12px;
+    font-size: 16px;
     color: #fff;
     margin-top: 5px;
 }
 
-.on-leave-badge {
-    background-color: #ff4d4d; /* Merah */
-}
-
-.not-on-leave-badge {
-    background-color: #4CAF50; /* Hijau */
-}
-
-/* Seksi Dokter */
-.doctor-section {
-    margin: 5px;
-}
-
 .leave-category {
-    margin-bottom: 10px;
+    margin-bottom: 40px;
 }
 
 .leave-category h3 {
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 10px;
     font-size: 20px;
     color: #333;
@@ -187,6 +181,24 @@ body {
     text-align: center;
     font-size: 18px;
     color: #555;
+}
+
+.indicators {
+    text-align: center;
+    margin-top: 0;
+}
+
+.indicator {
+    height: 15px;
+    width: 15px;
+    margin: 5px;
+    background-color: #ffffff;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.indicator.active-indicator {
+    background-color: #8f8f8f;
 }
 
 @keyframes slideDown {
