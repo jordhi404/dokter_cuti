@@ -93,8 +93,7 @@ body {
 }
 
 .card {
-    background: linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185));
-    border: 5px solid #dddddd;
+    border: 5px solid #fff;
     border-radius: 20px;
     box-sizing: border-box;
     padding: 10px;
@@ -121,7 +120,7 @@ body {
     height: 90px;
     overflow: hidden;
     border-radius: 100%;
-    border: 2px solid whitesmoke;
+    border: 3px solid whitesmoke;
     margin-left: 2px;
     margin-top: 5px;
 }
@@ -152,7 +151,11 @@ body {
 
 /* Warna Batas Kartu */
 .card.on-leave-today {
-    border-color: #ffffff;
+    background: linear-gradient(rgb(226, 77, 77), rgb(240, 10, 10), rgb(224, 24, 24));
+}
+
+.card.will-on-leave {
+    background: linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185));
 }
 
 /* Badge */
