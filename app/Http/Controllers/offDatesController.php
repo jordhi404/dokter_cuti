@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\doctorStatus;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Request;
-
-use function Ramsey\Uuid\v1;
 
 class offDatesController extends Controller
 {

@@ -48,10 +48,14 @@ function displayDoctorOffDates(data) {
 
 // Fungsi untuk membuat HTML untuk slider berdasarkan data dokter
 function createSliderHtml(doctorData, leaveType) {
-    const chunkedData = chunkArray(doctorData, 8); // Mengelompokkan data menjadi chunk per 10 dokter
+    const chunkedData = chunkArray(doctorData, 10); // Mengelompokkan data menjadi chunk per 10 dokter
+    
+    const today = new Date();
+    // const formattedDate = today.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'}); // Format tanggal lokal Indonesia
+    
     let sliderHtml = `
         <div class="leave-category">
-            <h3>${leaveType === 'cuti-hari-ini' ? 'Cuti Hari Ini' : 'Cuti yang Akan Datang'}</h3>
+            <h3>${leaveType === 'cuti-hari-ini' ? 'CUTI HARI INI' : 'CUTI YANG AKAN DATANG'}</h3>
             <div class="slider" id="doctor-slider-${leaveType}">
     `;
 
@@ -75,7 +79,7 @@ function createSliderHtml(doctorData, leaveType) {
                                             (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
                                             ? 'CUTI s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
                                             : (cuti.cuti_start === cuti.cuti_end || (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0)))
-                                            ? 'CUTI pada tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
+                                            ? new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
                                             : 'CUTI'
                                         }
                                     </strong>

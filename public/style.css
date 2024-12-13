@@ -1,21 +1,38 @@
 /* Base Styles */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('asset_cuti_dokter/Montserrat/Montserrat-VariableFont_wght.ttf');
+}
+
 body {
     margin: 0;
-    padding: 20px;
-    padding-bottom: 0;
-    background: linear-gradient(30deg, #f0bbe3,#88d4fa,#9cddfe);
+    padding: 0;
+    padding-bottom: 10vh;
+    background-image: url("asset_cuti_dokter/Background.png");
     background-attachment: fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Montserrat;
     overflow: hidden;
     border: 2px solid white;
 }
 
+.footer {
+    background-image: url("asset_cuti_dokter/QR Code SOBAtku.png");
+    background-repeat: no-repeat;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 100%;
+    height: 10vh;
+    z-index: 999;
+}
+
+/* Style Konten */
 .doctor-section {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .slider {
@@ -23,7 +40,7 @@ body {
     overflow: hidden;
     width: 100%;
     height: auto;
-    max-height: 40vh;
+    max-height: 60vh;
     margin-bottom: 10px;
 }
 
@@ -42,35 +59,35 @@ body {
 /* Bagian title page */
 .floatLeft {
     float: left;
-    margin-left: 5rem;
+    margin-left: 20px;
     margin-right: 0;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 130px;
 }
 
 .floatRight {
     float:right;
-    margin-right: 5rem;
+    margin-right: 20px;
     margin-left: 0;
-    width: 130px;
-    height: 100px;
+    width: 180px;
+    height: 150px;
 }
 
 .text-center {
     margin-bottom: 5px;
-    margin-top: 10px;
+    margin-top: 40px;
     text-align: center;
 }
 
 #title-text {
     display: inline-block;
     padding: 5px 30px;
-    margin-left: 35px;
+    margin-top: 30px;
+    margin-left: 20px;
     border-radius: 70px;
     color: #fff;
-    margin-top: 10px;
     background: linear-gradient(rgb(0, 124, 248), rgb(0, 93, 185));
-    font-size: 28px;
+    font-size: 38px;
 }
 
 #date-text {
@@ -78,7 +95,7 @@ body {
     padding: 5px;
     width: fit-content;  
     color: rgb(0, 93, 185); 
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
 }
@@ -146,15 +163,15 @@ body {
     margin-bottom: 5px;
     white-space: normal;
     word-wrap: break-word;
-    color: #f2ef45;
+    color: #ffffff;
 }
 
 /* Warna Batas Kartu */
-.card.on-leave-today {
-    background: linear-gradient(rgb(226, 77, 77), rgb(240, 10, 10), rgb(224, 24, 24));
+.card.will-on-leave {
+    background-color: #ac2a73;
 }
 
-.card.will-on-leave {
+.card.on-leave-today {
     background: linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185));
 }
 
@@ -176,7 +193,7 @@ body {
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 30px;
     color: #333;
 }
 
@@ -218,9 +235,9 @@ body {
 /* Media Queries */
 
 /* orientation: Portrait */
-@media (min-width: 601px) and (max-width: 1024px) {
+@media (max-height: 1600px) {
     .card {
         width: 38%; /* Two-column layout */
-        margin: 10px 1%;
+        margin: 10px;
     }
 }
