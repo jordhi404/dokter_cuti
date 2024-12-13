@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Fungsi untuk mengambil data menggunakan AJAX
 function fetchDoctorOffDates() {
     // Menggunakan AJAX untuk mengambil data JSON
-    fetch('/data/doctors')  // Ganti dengan URL yang sesuai untuk mengakses endpoint
+    fetch('/dokter_cuti/data/doctors')  
         .then(response => response.json())
         .then(data => {
             console.log("Data received:", data); // Debugging untuk melihat data JSON
@@ -64,7 +64,7 @@ function createSliderHtml(doctorData, leaveType) {
                 <div class="card ${leaveType === 'cuti-hari-ini' ? 'on-leave-today' : 'will-on-leave'}">
                     <div class="row">
                         <div class="card-img">
-                            <img src="${doctor.kode ? '/profile_picture/' + doctor.kode + '.jpg' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
+                            <img src="${doctor.kode ? '/dokter_cuti/profile_picture/' + doctor.kode + '.jpg' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
                         </div>
                         <div class="card-body">
                             <h4 class="card-title">${doctor.nama}</h4>
