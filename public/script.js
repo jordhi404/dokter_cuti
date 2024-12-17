@@ -1,146 +1,189 @@
-// Inisialisasi slider dan AJAX untuk mengambil data JSON
-document.addEventListener('DOMContentLoaded', function() {
-    fetchDoctorOffDates();
-});
+let cutiHariIni = [];
+let cutiAkanDatang = [];
 
-// Fungsi untuk mengambil data menggunakan AJAX
-function fetchDoctorOffDates() {
-    // Menggunakan AJAX untuk mengambil data JSON
-    fetch('/data/doctors')  // Ganti dengan URL yang sesuai untuk mengakses endpoint
-        .then(response => response.json())
-        .then(data => {
-            console.log("Data received:", data); // Debugging untuk melihat data JSON
-            displayDoctorOffDates(data); // Panggil fungsi untuk menampilkan data
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            document.getElementById("doctor-slider-container").innerHTML = "<p class='no-data'>Terjadi kesalahan saat memuat data.</p>";
-        });
-}
+// Mengambil data dari API.
+async function fetchData() {
+  try {
+    const response = await fetch('/data/doctors'); // Ganti dengan URL API yang sesuai
+    const data = await response.json();
 
-// Fungsi untuk menampilkan data dalam slider
-function displayDoctorOffDates(data) {
-    const container = document.getElementById('doctor-slider-container');
+    // Menyimpan data dari backend ke variabel
+    cutiHariIni = data.cuti_hari_ini || []; // Default ke array kosong jika undefined
+    cutiAkanDatang = data.cuti_akan_datang || []; // Default ke array kosong jika undefined
 
-    // Pastikan data memiliki properti yang diharapkan dan filter berdasarkan status cuti
-    const cutiHariIni = data.cuti_hari_ini || [];
-    const cutiAkanDatang = data.cuti_akan_datang || [];
+    console.log("Cuti Hari Ini:", cutiHariIni);
+    console.log("Cuti Akan Datang:", cutiAkanDatang);
+    console.log("Full API response:", data);
 
-    // Membuat tampilan slider untuk dokter yang sedang cuti hari ini
-    if (cutiHariIni.length > 0) {
-        container.innerHTML += createSliderHtml(cutiHariIni, 'cuti-hari-ini');
-    } else {
-        container.innerHTML += "<p class='no-data'>Tidak ada dokter yang sedang cuti hari ini.</p>";
+    // Tampilkan slider cuti hari ini terlebih dahulu
+    displaySlider(cutiHariIni, 'cuti-hari-ini');
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    const sliderContainer = document.getElementById("doctor-slider-container");
+    if (sliderContainer) {
+      sliderContainer.innerHTML = "<p class='no-data'>Terjadi kesalahan saat memuat data.</p>";
     }
-
-    // Membuat tampilan slider untuk dokter yang akan cuti
-    if (cutiAkanDatang.length > 0) {
-        container.innerHTML += createSliderHtml(cutiAkanDatang, 'cuti-akan-datang');
-    } else {
-        container.innerHTML += "<p class='no-data'>Tidak ada dokter yang akan cuti.</p>";
-    }
-
-    // Inisialisasi slider setelah data dimuat
-    initializeSlider('doctor-slider-cuti-hari-ini', 10000);
-    initializeSlider('doctor-slider-cuti-akan-datang', 10000);
+  }
 }
 
+// Panggil fungsi untuk mengambil data saat pertama kali
+fetchData();
 
-// Fungsi untuk membuat HTML untuk slider berdasarkan data dokter
-function createSliderHtml(doctorData, leaveType) {
-    const chunkedData = chunkArray(doctorData, 10); // Mengelompokkan data menjadi chunk per 10 dokter
-    
-    const today = new Date();
-    // const formattedDate = today.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'}); // Format tanggal lokal Indonesia
-    
-    let sliderHtml = `
-        <div class="leave-category">
-            <h3>${leaveType === 'cuti-hari-ini' ? 'CUTI HARI INI' : 'CUTI YANG AKAN DATANG'}</h3>
-            <div class="slider" id="doctor-slider-${leaveType}">
-    `;
-
-    chunkedData.forEach((chunk, index) => {
-        sliderHtml += `<div class="slide ${index === 0 ? 'active' : ''}">
-            <div class="doctor-cards">`;
-
-        chunk.forEach(doctor => {
-            sliderHtml += `
-                <div class="card ${leaveType === 'cuti-hari-ini' ? 'on-leave-today' : 'will-on-leave'}">
-                    <div class="row">
-                        <div class="card-img">
-                            <img src="${doctor.kode ? '/profile_picture/' + doctor.kode + '.jpg' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title">${doctor.nama}</h4>
-                            ${doctor.cuti.map(cuti => `
-                                <span class="badge on-leave-badge">
-                                    <strong>
-                                        ${
-                                            (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
-                                            ? 'CUTI s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
-                                            : (cuti.cuti_start === cuti.cuti_end || (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0)))
-                                            ? new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
-                                            : 'CUTI'
-                                        }
-                                    </strong>
-                                </span>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-
-        sliderHtml += `</div></div>`;
-    });
-
-    // Indikator slide
-    sliderHtml += 
-        `</div>
-            <div class="indicators">
-                ${chunkedData.map((_, index) => `
-                    <span class="indicator ${index === 0 ? 'active-indicator' : ''}" data-index="${index}"></span>                           
-                `).join('')}
-            </div>
-        </div>`;
-    return sliderHtml;
-}
-
-// Fungsi untuk membagi data menjadi chunk (dalam hal ini per 10 dokter)
-function chunkArray(arr, chunkSize) {
+// Fungsi untuk membuat chunk data.
+function chunkArray(array, chunkSize) {
     const result = [];
-    for (let i = 0; i < arr.length; i += chunkSize) {
-        result.push(arr.slice(i, i + chunkSize));
+    for (let i = 0; i < array.length; i += chunkSize) {
+        result.push(array.slice(i, i + chunkSize));
     }
     return result;
 }
 
-// Fungsi untuk menginisialisasi slider
-function initializeSlider(sliderID, interval = 10000) {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll(`#${sliderID} .slide`);
-    const indicators = document.querySelectorAll(`#${sliderID} + .indicators .indicator`);
+// Fungsi untuk membuat slider HTML dari data dokter.
+function createSliderHtml(doctorData, leaveType) {
+  if (!doctorData || doctorData.length === 0) {
+    return `
+      <div class="leave-category">
+        <p class="no-data">Tidak ada data untuk ditampilkan.</p>
+      </div>
+    `;
+  }
 
-    const totalSlides = slides.length;
+  const chunkedData = chunkArray(doctorData, 10); // Mengelompokkan data menjadi chunk per 10 dokter
 
-    if (totalSlides === 0) return; // Jika tidak ada slide, jangan lakukan apa-apa
+  let sliderHtml = `
+    <div class="leave-category">
+      <div class="slider" id="doctor-slider-${leaveType}">
+  `;
 
-    const showSlide = (index) => {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
+  chunkedData.forEach((chunk, chunkIndex) => {
+    sliderHtml += `
+      <div class="nested-slider">
+    `;
 
-        indicators.forEach((indicator, i) => {
-            indicator.classList.toggle('active-indicator', i === index);
-        });
-    };
+    chunk.forEach(doctor => {
+      sliderHtml += `
+        <div class="card ${leaveType === 'cuti-hari-ini' ? 'on-leave-today' : 'will-on-leave'}">
+          <div class="row">
+            <div class="card-img">
+              <img src="${doctor.kode ? '/profile_picture/png/' + doctor.kode + '.png' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">${doctor.nama}</h4>
+              ${doctor.cuti.map(cuti => `
+                <span class="badge on-leave-badge">
+                  <strong>
+                    ${
+                      (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
+                      ? 'CUTI s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
+                      : (cuti.cuti_start === cuti.cuti_end || (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0)))
+                      ? new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
+                      : 'CUTI'
+                    }
+                  </strong>
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    });
 
-    showSlide(currentSlide);
+    sliderHtml += `
+      </div>
+    `;
+  });
 
-    const switchSlide = () => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        showSlide(currentSlide);
-    };
+  // Indikator slide untuk nested slider
+  sliderHtml += `
+      </div>
+      <div class="indicators">
+        ${chunkedData.map((_, index) => `
+          <span class="indicator ${index === 0 ? 'active-indicator' : ''}" data-index="${index}"></span>
+        `).join('')}
+      </div>
+    </div>
+  `;
 
-    setInterval(switchSlide, interval); // Slide otomatis setiap 10 detik.
+  return sliderHtml;
+}
+
+let currentSliderState = 'cuti-hari-ini'; // Mulai dengan cuti hari ini
+let nestedSliderIndex = 0; // Indeks nested slider saat ini
+
+// Fungsi untuk memulai animasi nested slider
+function startNestedSliderAnimation(leaveType) {
+  const nestedSliders = document.querySelectorAll(`.leave-category .nested-slider`);
+  const totalNestedSliders = nestedSliders.length;
+
+  let nestedIndex = 0; // Indeks nested slider saat ini
+
+  function showNextNestedSlider() {
+    console.log(`Starting animation for: ${leaveType}`);
+    console.log('Nested sliders found:', nestedSliders.length);
+    console.log('Current nestedIndex:', nestedIndex);
+
+    // Hapus kelas "active" dari semua nested slider
+    nestedSliders.forEach(slider => slider.classList.remove('active'));
+
+    // Tambahkan kelas "active" ke slider yang sesuai
+    if (nestedIndex < totalNestedSliders) {
+      nestedSliders[nestedIndex].classList.add('active');
+
+      // Pindahkan indikator aktif sesuai dengan nestedIndex
+      const indicators = document.querySelectorAll(`#doctor-slider-${currentSliderState} + .indicators .indicator`);
+      indicators.forEach((indicator, i) => {
+          indicator.classList.toggle('active-indicator', i === nestedIndex);
+      });
+      
+      nestedIndex++;
+
+      // Tampilkan slide berikutnya setelah 5 detik
+      setTimeout(showNextNestedSlider, 7000);
+    } else {
+      // Jika semua nested slider selesai, pindah ke slider utama berikutnya
+      switchMainSlider();
+    }
+  }
+
+  setTimeout(showNextNestedSlider, 100);
+}
+
+// Fungsi untuk menampilkan slider pada halaman.
+function displaySlider(data, leaveType) {
+  console.log(`Displaying slider for ${leaveType}:`, data);
+  
+  const sliderContainer = document.getElementById('doctor-slider-container');
+  if (!sliderContainer) {
+    console.error('Slider container not found');
+    return;
+  }
+
+  // Buat HTML slider berdasarkan data
+  const sliderHtml = createSliderHtml(data, leaveType);
+  sliderContainer.innerHTML = sliderHtml; // Update konten slider
+
+  // Mulai animasi untuk nested slider
+  startNestedSliderAnimation(leaveType);
+}
+
+// Fungsi untuk mengganti slider utama secara otomatis setelah beberapa detik.
+function switchMainSlider() {
+  const titleText = document.getElementById('title-text');
+  const dateText = document.getElementById('date-text');
+
+  if (currentSliderState === 'cuti-hari-ini') {
+    displaySlider(cutiAkanDatang, 'cuti-akan-datang');
+    currentSliderState = 'cuti-akan-datang';
+    titleText.textContent = 'Dokter Cuti Mendatang';
+    titleText.style.background = 'linear-gradient(rgb(255, 20, 147), rgb(199, 21, 133), rgb(199, 21, 140))';
+    dateText.textContent = 'Bulan ' + new Date().toLocaleDateString('id-ID', {month: 'long'});
+  } else {
+    displaySlider(cutiHariIni, 'cuti-hari-ini');
+    currentSliderState = 'cuti-hari-ini';
+    titleText.textContent = 'Dokter Cuti Hari Ini';
+    titleText.style.background = 'linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185))';
+    dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  console.log("Switching slider. Current state:", currentSliderState);
 }
