@@ -24,25 +24,6 @@ async function fetchData() {
       sliderContainer.innerHTML = "<p class='no-data'>Terjadi kesalahan saat memuat data.</p>";
     }
   }
-  
-// Inisialisasi slider dan AJAX untuk mengambil data JSON
-document.addEventListener('DOMContentLoaded', function() {
-    fetchDoctorOffDates();
-});
-
-// Fungsi untuk mengambil data menggunakan AJAX
-function fetchDoctorOffDates() {
-    // Menggunakan AJAX untuk mengambil data JSON
-    fetch('/dokter_cuti/data/doctors')  
-        .then(response => response.json())
-        .then(data => {
-            console.log("Data received:", data); // Debugging untuk melihat data JSON
-            displayDoctorOffDates(data); // Panggil fungsi untuk menampilkan data
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            document.getElementById("doctor-slider-container").innerHTML = "<p class='no-data'>Terjadi kesalahan saat memuat data.</p>";
-        });
 }
 
 // Panggil fungsi untuk mengambil data saat pertama kali
@@ -105,41 +86,6 @@ function createSliderHtml(doctorData, leaveType) {
           </div>
         </div>
       `;
-
-    chunkedData.forEach((chunk, index) => {
-        sliderHtml += `<div class="slide ${index === 0 ? 'active' : ''}">
-            <div class="doctor-cards">`;
-
-        chunk.forEach(doctor => {
-            sliderHtml += `
-                <div class="card ${leaveType === 'cuti-hari-ini' ? 'on-leave-today' : 'will-on-leave'}">
-                    <div class="row">
-                        <div class="card-img">
-                            <img src="${doctor.kode ? '/dokter_cuti/profile_picture/' + doctor.kode + '.jpg' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title">${doctor.nama}</h4>
-                            ${doctor.cuti.map(cuti => `
-                                <span class="badge on-leave-badge">
-                                    <strong>
-                                        ${
-                                            (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
-                                            ? 'CUTI s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
-                                            : (cuti.cuti_start === cuti.cuti_end || (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0)))
-                                            ? new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s/d ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
-                                            : 'CUTI'
-                                        }
-                                    </strong>
-                                </span>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-
-        sliderHtml += `</div></div>`;
-
     });
 
     sliderHtml += `
