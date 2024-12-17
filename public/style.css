@@ -50,7 +50,7 @@ body {
 }
 
 .text-center {
-    margin-bottom: 1.3vh;
+    margin-bottom: 1vh;
     margin-top: 1vh;
     text-align: center;
 }
@@ -63,7 +63,7 @@ body {
     border-radius: 70px;
     color: #fff;
     background: linear-gradient(rgb(0, 124, 248), rgb(0, 93, 185));
-    font-size: 85px;
+    font-size: 30px;
 }
 
 #date-text {
@@ -71,7 +71,7 @@ body {
     padding: 5px;
     width: 30vw;  
     color: rgb(0, 93, 185); 
-    font-size: 50px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
 }
@@ -85,7 +85,8 @@ body {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 73vh;
+    height: 71vh;
+    padding: 20px;
     max-height: 100%;
     margin-bottom: 0;
 }
@@ -102,7 +103,7 @@ body {
     animation: slideDown 1s ease-in-out;
     align-items: center;
     flex-direction: column;
-    gap: 2.3vh; 
+    gap: 1vh; 
     width: 100%; 
 }
 
@@ -110,7 +111,7 @@ body {
 .nested-slider .card {
     width: 65%; /* Sesuaikan lebar kartu */
     max-width: 60vw; /* Batasi lebar maksimal kartu */
-    height: 4vh;
+    height: 6.2vh;
     padding: 5px; /* Tambahkan ruang dalam kartu */
     box-shadow: 0 5px 8px rgb(57, 57, 57); /* Tambahkan efek bayangan */
     border-radius: 15px; /* Opsional: Tambahkan radius pada sudut */
@@ -148,13 +149,13 @@ body {
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
-    height: 3vh;
-    max-height: 3.7vh;
+    height: 4vh;
+    max-height: 4vh;
     padding-top: 2vh;
 }
 
 .nested-slider .card-title {
-    font-size: 50px;
+    font-size: 20px;
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -210,12 +211,12 @@ body {
     display: inline-block;
     padding: 5px 0;
     border-radius: 12px;
-    font-size: 40px;
+    font-size: 18px;
     color: #ffffff;
 }
 
 .leave-category {
-    margin-bottom: 1.5vh;
+    margin-bottom: 1vh;
 }
 
 .no-data {
