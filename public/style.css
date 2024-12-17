@@ -6,7 +6,7 @@
 
 body {
     margin: 0;
-    padding: 10px;
+    padding: 1vh 0.5vw;
     padding-bottom: 10vh;
     background-image: url("asset_cuti_dokter/Background.png");
     background-attachment: fixed;
@@ -16,161 +16,189 @@ body {
     height: 100vh;
     font-family: Montserrat;
     overflow: hidden;
-    border: 2px solid white;
+    border: 5px solid white;
 }
 
 .footer {
     background-image: url("asset_cuti_dokter/QR Code SOBAtku.png");
     background-repeat: no-repeat;
-    background-size: 90% 80%;
+    background-size: 80% 70%;
     background-position: center;
     position: fixed;
-    bottom: 20px;
-    left: 5px;
+    bottom: 1.25vh;
+    left: 1vw;
     width: 100%;
     height: 10vh;
     z-index: 999;
 }
 
-/* Style Konten */
-.doctor-section {
-    margin-top: 20px;
-}
-
-.slider {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: auto;
-    max-height: 60vh;
-    margin-bottom: 10px;
-}
-
-.slide {
-    display: none;
-    width: 100%;
-}
-
-.slide.active {
-    display: flex;
-    animation: slideDown 1s ease-in-out;
-    align-items: center;
-    flex-direction: column;
-}
-
 /* Bagian title page */
 .floatLeft {
     float: left;
-    margin-left: 20px;
+    margin-left: 5vw;
     margin-right: 0;
-    width: 150px;
-    height: 130px;
+    width: 15vw;
+    height: 8vh;
 }
 
 .floatRight {
     float:right;
-    margin-right: 20px;
+    margin-right: 5vw;
     margin-left: 0;
-    width: 180px;
-    height: 150px;
+    width: 16vw;
+    height: 8vh;
 }
 
 .text-center {
-    margin-bottom: 5px;
-    margin-top: 40px;
+    margin-bottom: 1.3vh;
+    margin-top: 1vh;
     text-align: center;
 }
 
 #title-text {
     display: inline-block;
     padding: 5px 30px;
-    margin-top: 30px;
-    margin-left: 20px;
+    margin-top: 3vh;
+    margin-left: 1.5vw;
     border-radius: 70px;
     color: #fff;
     background: linear-gradient(rgb(0, 124, 248), rgb(0, 93, 185));
-    font-size: 38px;
+    font-size: 85px;
 }
 
 #date-text {
     margin: 10px auto 0 auto;
     padding: 5px;
-    width: fit-content;  
+    width: 30vw;  
     color: rgb(0, 93, 185); 
-    font-size: 30px;
+    font-size: 50px;
     font-weight: bold;
     text-align: center;
 }
 
-/* Kartu dokter */
-.doctor-cards {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: space-evenly;
-    gap: 10px;
+/* Style Konten */
+.doctor-section {
+    margin-top: 0.3vh;
 }
 
-.card {
-    border: 5px solid #fff;
-    border-radius: 20px;
-    box-sizing: border-box;
-    padding: 10px;
-    padding-top: 2px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    width: 95%;
-    max-width: 500px;
-    height: 120px;
-    margin: 10px;
+.slider {
+    position: relative;
     overflow: hidden;
+    width: 100%;
+    height: 73vh;
+    max-height: 100%;
+    margin-bottom: 0;
 }
 
-.row {
+.nested-slider {
+    display: none;
+    width: 100%;
+    height: 70vh;
+    justify-content: center;
+}
+
+.nested-slider.active {
+    display: flex;
+    animation: slideDown 1s ease-in-out;
+    align-items: center;
+    flex-direction: column;
+    gap: 2.3vh; 
+    width: 100%; 
+}
+
+/* Design kartu dokter */
+.nested-slider .card {
+    width: 65%; /* Sesuaikan lebar kartu */
+    max-width: 60vw; /* Batasi lebar maksimal kartu */
+    height: 4vh;
+    padding: 5px; /* Tambahkan ruang dalam kartu */
+    box-shadow: 0 5px 8px rgb(57, 57, 57); /* Tambahkan efek bayangan */
+    border-radius: 15px; /* Opsional: Tambahkan radius pada sudut */
+    border: 5px solid #fff;
+}
+
+.nested-slider .card.active {
+  display: block; /* Tampilkan hanya slider yang memiliki kelas active */
+}
+
+.nested-slider .row {
     display: flex;
     margin: 0;
     padding: 0;
-    margin-top: 2px;
-    height: auto;
+    margin-top: -2vh;
+    height: 5vh;
 }
 
-.card-img {
-    width: 110px;
-    height: 90px;
+.nested-slider .card-img {
+    width: 16vw;
+    height: 10vh;
+    margin-top: -1vh;
     overflow: hidden;
-    border-radius: 100%;
-    border: 3px solid whitesmoke;
-    margin-left: 2px;
-    margin-top: 5px;
 }
 
-.card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.nested-slider .card-img img {
+    width: 11vw;
+    height: 9.5vh;
+    object-fit: contain;
 }
 
-.card-body {
+.nested-slider .card-body {
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: 10px;
+    overflow: hidden;
+    height: 3vh;
+    max-height: 3.7vh;
+    padding-top: 2vh;
 }
 
-.card-title {
-    font-size: 17px;
+.nested-slider .card-title {
+    font-size: 50px;
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 5px;
     white-space: normal;
     word-wrap: break-word;
-    color: #ffffff;
+    color: #ffdf00;
 }
 
-/* Warna Batas Kartu */
+/* Menyesuaikan posisi gambar pada barisan ganjil dan genap */
+.nested-slider .card:nth-child(odd) .card-img {
+    order: -1; /* Memindahkan gambar ke kiri untuk barisan ganjil */
+    margin-left: -3vw;
+    margin-right: 0;
+}
+
+.nested-slider .card:nth-child(even) .card-img {
+    order: 1; /* Menjaga gambar di sisi kanan untuk barisan genap */
+    margin-left: 0;
+    margin-right: -8vw;
+}
+
+.nested-slider .card:nth-child(odd) {
+    margin-left: 11vw;
+    margin-right: auto;
+}
+
+.nested-slider .card:nth-child(even) {
+    margin-left: auto;
+    margin-right: 11vw;
+}
+
+.nested-slider .card:nth-child(odd) .card-body {
+    margin-left: 1vw;
+    margin-right: 0;
+}
+
+.nested-slider .card:nth-child(even) .card-body {
+    margin-left: 2vw;
+    margin-right: 1vw;
+}
+
+/* Warna Background Kartu */
 .card.will-on-leave {
-    background-color: #ac2a73;
+    background: linear-gradient(rgb(255, 20, 147), rgb(199, 21, 133), rgb(199, 21, 140));
 }
 
 .card.on-leave-today {
@@ -182,26 +210,17 @@ body {
     display: inline-block;
     padding: 5px 0;
     border-radius: 12px;
-    font-size: 16px;
-    color: #fff;
-    margin-top: 5px;
+    font-size: 40px;
+    color: #ffffff;
 }
 
 .leave-category {
-    margin-bottom: 40px;
-}
-
-.leave-category h3 {
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 30px;
-    color: #333;
+    margin-bottom: 1.5vh;
 }
 
 .no-data {
     text-align: center;
-    font-size: 18px;
+    font-size: 50px;
     color: #555;
 }
 
@@ -231,15 +250,5 @@ body {
     100% {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-/* Media Queries */
-
-/* orientation: Portrait */
-@media (max-height: 1600px) {
-    .card {
-        width: 38%; /* Two-column layout */
-        margin: 10px;
     }
 }
