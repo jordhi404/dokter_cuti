@@ -4,7 +4,7 @@ let cutiAkanDatang = [];
 // Mengambil data dari API.
 async function fetchData() {
   try {
-    const response = await fetch('/data/doctors'); // Ganti dengan URL API yang sesuai
+    const response = await fetch('/data/doctors'); // Ganti dengan URL API yang sesuai ('/dokter_cuti/data/doctors')
     const data = await response.json();
 
     // Menyimpan data dari backend ke variabel
@@ -65,7 +65,7 @@ function createSliderHtml(doctorData, leaveType) {
         <div class="card ${leaveType === 'cuti-hari-ini' ? 'on-leave-today' : 'will-on-leave'}">
           <div class="row">
             <div class="card-img">
-              <img src="${doctor.kode ? '/profile_picture/png/' + doctor.kode + '.png' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
+              <img src="${doctor.kode ? '/profile_picture/png/' + doctor.kode + '.png' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}"> 
             </div>
             <div class="card-body">
               <h4 class="card-title">${doctor.nama}</h4>
@@ -138,7 +138,7 @@ function startNestedSliderAnimation(leaveType) {
       nestedIndex++;
 
       // Tampilkan slide berikutnya setelah 5 detik
-      setTimeout(showNextNestedSlider, 7000);
+      setTimeout(showNextNestedSlider, 10000);
     } else {
       // Jika semua nested slider selesai, pindah ke slider utama berikutnya
       switchMainSlider();
