@@ -1,3 +1,47 @@
+@media (max-width: 768px) and (max-height: 1366px) {
+    #title-text {
+        font-size: 25px;
+    }
+
+    #date-text {
+        font-size: 18px;
+    }
+
+    .nested-slider .card-title {
+        font-size: 17px;
+    }
+
+    .badge {
+        font-size: 15px;
+    }
+
+    .no-data {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 900px) and (min-height: 1600px){
+    #title-text {
+        font-size: 28px;
+    }
+
+    #date-text {
+        font-size: 18px;
+    }
+
+    .nested-slider .card-title {
+        font-size: 20px;
+    }
+
+    .badge {
+        font-size: 18px;
+    }
+
+    .no-data {
+        font-size: 18px;
+    }
+}
+
 /* Base Styles */
 @font-face {
     font-family: 'Montserrat';
@@ -63,7 +107,6 @@ body {
     border-radius: 70px;
     color: #fff;
     background: linear-gradient(rgb(0, 124, 248), rgb(0, 93, 185));
-    font-size: 30px;
 }
 
 #date-text {
@@ -71,7 +114,6 @@ body {
     padding: 5px;
     width: 30vw;  
     color: rgb(0, 93, 185); 
-    font-size: 20px;
     font-weight: bold;
     text-align: center;
 }
@@ -111,7 +153,7 @@ body {
 .nested-slider .card {
     width: 65%; /* Sesuaikan lebar kartu */
     max-width: 60vw; /* Batasi lebar maksimal kartu */
-    height: 6.2vh;
+    height: 5vh;
     padding: 5px; /* Tambahkan ruang dalam kartu */
     box-shadow: 0 5px 8px rgb(57, 57, 57); /* Tambahkan efek bayangan */
     border-radius: 15px; /* Opsional: Tambahkan radius pada sudut */
@@ -155,7 +197,6 @@ body {
 }
 
 .nested-slider .card-title {
-    font-size: 20px;
     font-weight: bold;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -211,7 +252,6 @@ body {
     display: inline-block;
     padding: 5px 0;
     border-radius: 12px;
-    font-size: 18px;
     color: #ffffff;
 }
 
@@ -221,7 +261,6 @@ body {
 
 .no-data {
     text-align: center;
-    font-size: 50px;
     color: #555;
 }
 
