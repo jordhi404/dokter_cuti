@@ -11,6 +11,7 @@ class offDatesController extends Controller
         // Menyiapkan variabel untuk menyimpan data cuti
         $doctors = doctorStatus::where('qmax', 0)
             ->whereNotIn('tipe_poli', ['EXECUTIVE', 'NON_REGULER'])
+            ->whereNotIn('kddokter', ['DG03', 'DG04'])
             ->whereMonth('tanggal', now()->month)
             ->whereYear('tanggal', now()->year)
             ->whereHas('doctor', function ($query) {

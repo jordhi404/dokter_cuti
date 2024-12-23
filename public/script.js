@@ -4,7 +4,7 @@ let cutiAkanDatang = [];
 // Mengambil data dari API.
 async function fetchData() {
   try {
-    const response = await fetch('/dokter_cuti/data/doctors'); // Ganti dengan URL API yang sesuai
+    const response = await fetch('/data/doctors'); // Ganti dengan URL API yang sesuai
     const data = await response.json();
 
     // Menyimpan data dari backend ke variabel
@@ -65,7 +65,7 @@ function createSliderHtml(doctorData, leaveType) {
         <div class="card ${leaveType === 'cuti-hari-ini' ? 'on-leave-today' : 'will-on-leave'}">
           <div class="row">
             <div class="card-img">
-              <img src="${doctor.kode ? '/dokter_cuti/profile_picture/png/' + doctor.kode + '.png' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
+              <img src="${doctor.kode ? '/profile_picture/png/' + doctor.kode + '.png' : 'profile_icon/profile_pict.png'}" alt="${doctor.nama}">
             </div>
             <div class="card-body">
               <h4 class="card-title">${doctor.nama}</h4>
@@ -175,14 +175,14 @@ function switchMainSlider() {
     displaySlider(cutiAkanDatang, 'cuti-akan-datang');
     currentSliderState = 'cuti-akan-datang';
     titleText.textContent = 'Dokter Cuti Mendatang';
-    titleText.style.background = 'linear-gradient(rgb(255, 20, 147), rgb(199, 21, 133), rgb(199, 21, 140))';
-    dateText.textContent = 'Bulan ' + new Date().toLocaleDateString('id-ID', {month: 'long'});
+    titleText.style.background = 'linear-gradient(rgba(255, 20, 147, 0.7), rgba(199, 21, 133, 0.7), rgba(199, 21, 140, 0.7))';
+    dateText.textContent = new Date().toLocaleDateString('id-ID', {month: 'long'}).toUpperCase();
   } else {
     displaySlider(cutiHariIni, 'cuti-hari-ini');
     currentSliderState = 'cuti-hari-ini';
     titleText.textContent = 'Dokter Cuti Hari Ini';
     titleText.style.background = 'linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185))';
-    dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+    dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }).replace(/\b[a-z]+\b/gi, match => match.toUpperCase());
   }
 
   console.log("Switching slider. Current state:", currentSliderState);

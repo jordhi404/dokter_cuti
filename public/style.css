@@ -4,15 +4,16 @@
     }
 
     #date-text {
-        font-size: 18px;
+        font-size: 25px;
     }
 
     .nested-slider .card-title {
         font-size: 13px;
+        font-size: 20px;
     }
 
     .badge {
-        font-size: 15px;
+        font-size: 17px;
     }
 
     .no-data {
@@ -26,7 +27,7 @@
     }
 
     #date-text {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .nested-slider .card-title {
@@ -111,7 +112,7 @@ body {
 
 #date-text {
     margin: 10px auto 0 auto;
-    padding: 5px;
+    padding: 2px;
     width: 30vw;  
     color: rgb(0, 93, 185); 
     font-weight: bold;
@@ -129,6 +130,7 @@ body {
     width: 100%;
     height: 71vh;
     padding: 25px;
+    padding-left: 5px;
     max-height: 100%;
     margin-bottom: 0;
 }
@@ -151,9 +153,9 @@ body {
 
 /* Design kartu dokter */
 .nested-slider .card {
-    width: 65%; /* Sesuaikan lebar kartu */
-    max-width: 60vw; /* Batasi lebar maksimal kartu */
-    height: 5vh;
+    width: 67%; /* Sesuaikan lebar kartu */
+    max-width: 70vw; /* Batasi lebar maksimal kartu */
+    height: 5.3vh;
     padding: 5px; /* Tambahkan ruang dalam kartu */
     box-shadow: 0 5px 8px rgb(57, 57, 57); /* Tambahkan efek bayangan */
     border-radius: 15px; /* Opsional: Tambahkan radius pada sudut */
@@ -173,7 +175,7 @@ body {
 }
 
 .nested-slider .card-img {
-    width: 16vw;
+    width: 13vw;
     height: 10vh;
     margin-top: -1vh;
     overflow: hidden;
@@ -191,8 +193,8 @@ body {
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
-    height: 4vh;
-    max-height: 4vh;
+    height: 4.6vh;
+    max-height: 5vh;
     padding-top: 2vh;
 }
 
@@ -229,7 +231,7 @@ body {
 }
 
 .nested-slider .card:nth-child(odd) .card-body {
-    margin-left: 1vw;
+    margin-left: 0.3vw;
     margin-right: 0;
 }
 
@@ -240,7 +242,7 @@ body {
 
 /* Warna Background Kartu */
 .card.will-on-leave {
-    background: linear-gradient(rgb(255, 20, 147), rgb(199, 21, 133), rgb(199, 21, 140));
+    background: linear-gradient(rgba(255, 20, 145, 0.7), rgba(199, 21, 133, 0.7), rgba(199, 21, 140, 0.7));
 }
 
 .card.on-leave-today {
