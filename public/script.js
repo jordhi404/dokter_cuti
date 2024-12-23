@@ -137,7 +137,7 @@ function startNestedSliderAnimation(leaveType) {
       
       nestedIndex++;
 
-      // Tampilkan slide berikutnya setelah 5 detik
+      // Tampilkan slide berikutnya setelah 10 detik
       setTimeout(showNextNestedSlider, 10000);
     } else {
       // Jika semua nested slider selesai, pindah ke slider utama berikutnya
@@ -175,14 +175,14 @@ function switchMainSlider() {
     displaySlider(cutiAkanDatang, 'cuti-akan-datang');
     currentSliderState = 'cuti-akan-datang';
     titleText.textContent = 'Dokter Cuti Mendatang';
-    titleText.style.background = 'linear-gradient(rgb(255, 20, 147), rgb(199, 21, 133), rgb(199, 21, 140))';
-    dateText.textContent = 'Bulan ' + new Date().toLocaleDateString('id-ID', {month: 'long'});
+    titleText.style.background = 'linear-gradient(rgba(255, 20, 147, 0.7), rgba(199, 21, 133, 0.7), rgba(199, 21, 140, 0.7))';
+    dateText.textContent = new Date().toLocaleDateString('id-ID', {month: 'long'}).toUpperCase();
   } else {
     displaySlider(cutiHariIni, 'cuti-hari-ini');
     currentSliderState = 'cuti-hari-ini';
     titleText.textContent = 'Dokter Cuti Hari Ini';
     titleText.style.background = 'linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185))';
-    dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
+    dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }).replace(/\b[a-z]+\b/gi, match => match.toUpperCase());
   }
 
   console.log("Switching slider. Current state:", currentSliderState);
