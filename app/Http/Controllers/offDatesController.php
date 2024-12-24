@@ -10,7 +10,22 @@ class offDatesController extends Controller
     private function getDoctorOffDates() {
         $holidays = [
             '2024-12-25',
-            '2025-01-01'
+            '2025-01-01',
+            '2025-01-27',
+            '2025-01-29',
+            '2025-03-29',
+            '2025-03-31',
+            '2025-04-01',
+            '2025-04-18',
+            '2025-04-20',
+            '2025-05-01',
+            '2025-05-12',
+            '2025-05-29',
+            '2025-06-01',
+            '2025-06-06',
+            '2025-06-27',
+            '2025-12-25',
+            '2026-01-01'
         ];
 
         // Menyiapkan variabel untuk menyimpan data cuti
