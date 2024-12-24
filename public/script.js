@@ -182,7 +182,7 @@ function switchMainSlider() {
     currentSliderState = 'cuti-hari-ini';
     titleText.textContent = 'Dokter Cuti Hari Ini';
     titleText.style.background = 'linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185))';
-    dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }).replace(/\b[a-z]+\b/gi, match => match.toUpperCase());
+    dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).replace(/\b[a-z]+\b/gi, match => match.toUpperCase());
   }
 
   console.log("Switching slider. Current state:", currentSliderState);
