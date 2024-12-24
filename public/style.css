@@ -235,8 +235,8 @@ body {
 }
 
 .nested-slider .card:nth-child(even) .card-body {
-    margin-left: 2vw;
-    margin-right: 0;
+    margin-left: 0;
+    margin-right: 1.5vw;
     align-items: end;
 }
 
