@@ -8,33 +8,12 @@ use Carbon\Carbon;
 class offDatesController extends Controller
 {
     private function getDoctorOffDates() {
-        $holidays = [
-            '2024-12-25',
-            '2025-01-01',
-            '2025-01-27',
-            '2025-01-29',
-            '2025-03-29',
-            '2025-03-31',
-            '2025-04-01',
-            '2025-04-18',
-            '2025-04-20',
-            '2025-05-01',
-            '2025-05-12',
-            '2025-05-29',
-            '2025-06-01',
-            '2025-06-06',
-            '2025-06-27',
-            '2025-12-25',
-            '2026-01-01'
-        ];
-
         // Menyiapkan variabel untuk menyimpan data cuti
         $doctors = doctorStatus::where('qmax', 0)
             ->whereNotIn('tipe_poli', ['EXECUTIVE', 'NON_REGULER'])
             ->whereNotIn('kddokter', ['DG03', 'DG04'])
             ->whereMonth('tanggal', now()->month)
             ->whereYear('tanggal', now()->year)
-            ->whereNotIn('tanggal', $holidays)
             ->whereHas('doctor', function ($query) {
                 $query->whereNotIn('keterangan', [
                     'UMUM', 'DOKTER UMUM', 'DOKTER PCR', 'AHLI GIZI', 'PETUGAS MEDIS', 'BIDAN',
