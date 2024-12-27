@@ -73,13 +73,15 @@ function createSliderHtml(doctorData, leaveType) {
                 <span class="badge on-leave-badge">
                   <strong>
                     ${
-                      (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) === new Date(cuti.cuti_end).setHours(0, 0, 0, 0))
-                      ? 'CUTI ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
+                      ((new Date(cuti.cuti_start).setHours(0, 0, 0, 0) === new Date(cuti.cuti_end).setHours(0, 0, 0, 0)) && new Date(cuti.cuti_start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0))
+                      ? 'Tidak Praktik Hari Ini'
+                      :(new Date(cuti.cuti_start).setHours(0, 0, 0, 0) === new Date(cuti.cuti_end).setHours(0, 0, 0, 0))
+                      ? 'Tidak Praktik pada tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
                       :(new Date(cuti.cuti_start).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
-                      ? 'CUTI s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
-                      : (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0))
-                      ? new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric'})
-                      : 'CUTI'
+                      ? 'Tidak Praktik s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
+                      : (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0))
+                      ? 'Tidak Praktik pada tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
+                      : 'Tidak Praktik'
                     }
                   </strong>
                 </span>
@@ -140,7 +142,7 @@ function startNestedSliderAnimation(leaveType) {
       nestedIndex++;
 
       // Tampilkan slide berikutnya setelah 10 detik
-      setTimeout(showNextNestedSlider, 10000);
+      setTimeout(showNextNestedSlider, 15000);
     } else {
       // Jika semua nested slider selesai, pindah ke slider utama berikutnya
       switchMainSlider();
@@ -176,13 +178,13 @@ function switchMainSlider() {
   if (currentSliderState === 'cuti-hari-ini') {
     displaySlider(cutiAkanDatang, 'cuti-akan-datang');
     currentSliderState = 'cuti-akan-datang';
-    titleText.textContent = 'Dokter Cuti Mendatang';
+    // titleText.textContent = 'Dokter Cuti Mendatang';
     titleText.style.background = 'linear-gradient(rgba(255, 20, 147, 0.7), rgba(199, 21, 133, 0.7), rgba(199, 21, 140, 0.7))';
-    dateText.textContent = new Date().toLocaleDateString('id-ID', {month: 'long'}).toUpperCase();
+    dateText.textContent = new Date().toLocaleDateString('id-ID', {day: 'numeric', month: 'long'}).toUpperCase() + ' - ' + new Date(new Date().setDate(new Date().getDate() + 14)).toLocaleDateString('id-ID', {day: 'numeric', month: 'long'}).toUpperCase();
   } else {
     displaySlider(cutiHariIni, 'cuti-hari-ini');
     currentSliderState = 'cuti-hari-ini';
-    titleText.textContent = 'Dokter Cuti Hari Ini';
+    // titleText.textContent = 'Dokter Cuti Hari Ini';
     titleText.style.background = 'linear-gradient(rgb(0, 124, 248), rgb(9, 93, 178), rgb(0, 93, 185))';
     dateText.textContent = new Date().toLocaleDateString('id-ID', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).replace(/\b[a-z]+\b/gi, match => match.toUpperCase());
   }

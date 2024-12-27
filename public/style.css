@@ -1,3 +1,4 @@
+/* Resolusi max sampai 768x1366 orientasi portrait */
 @media (max-width: 768px) and (max-height: 1366px) {
     #title-text {
         font-size: 25px;
@@ -17,29 +18,30 @@
     }
 
     .no-data {
-        font-size: 15px;
+        font-size: 17px;
     }
 }
 
+/* Resolusi 900x1600 dan ke atas orientasi portrait*/
 @media (min-width: 900px) and (min-height: 1600px){
     #title-text {
         font-size: 28px;
     }
 
     #date-text {
-        font-size: 20px;
+        font-size: 25px;
     }
 
     .nested-slider .card-title {
-        font-size: 20px;
+        font-size: 35px;
     }
 
     .badge {
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .no-data {
-        font-size: 18px;
+        font-size: 20px;
     }
 }
 
