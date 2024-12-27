@@ -254,7 +254,7 @@ body {
 /* Badge */
 .badge {
     display: inline-block;
-    padding: 5px 0;
+    padding: 1px 0;
     border-radius: 12px;
     color: #ffffff;
 }
