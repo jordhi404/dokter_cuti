@@ -11,7 +11,7 @@
     <div class="text-center">
         <img class="floatLeft" src="asset_cuti_dokter/Logo KARS.png" alt="KARS_icon">
         <img class="floatRight" src="asset_cuti_dokter/Logo RS.png" alt="rs_icon">
-        <h1 id="title-text">Dokter Cuti Hari Ini</h1>
+        <h1 id="title-text">Info Praktik Dokter</h1>
         <h2 id="date-text">{{ strtoupper(\Carbon\Carbon::now()->translatedFormat('l, d F Y')) }}</h2>
     </div>
 
