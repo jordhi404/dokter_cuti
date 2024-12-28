@@ -76,11 +76,13 @@ function createSliderHtml(doctorData, leaveType) {
                       ((new Date(cuti.cuti_start).setHours(0, 0, 0, 0) === new Date(cuti.cuti_end).setHours(0, 0, 0, 0)) && new Date(cuti.cuti_start).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0))
                       ? 'Tidak Praktik Hari Ini'
                       :(new Date(cuti.cuti_start).setHours(0, 0, 0, 0) === new Date(cuti.cuti_end).setHours(0, 0, 0, 0))
-                      ? 'Tidak Praktik pada tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
+                      ? 'Tidak Praktik tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
                       :(new Date(cuti.cuti_start).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) >= new Date().setHours(0, 0, 0, 0))
                       ? 'Tidak Praktik s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
                       : (new Date(cuti.cuti_start).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0) && new Date(cuti.cuti_end).setHours(0, 0, 0, 0) > new Date().setHours(0, 0, 0, 0))
-                      ? 'Tidak Praktik pada tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
+                        ? (new Date(cuti.cuti_start).getMonth() === new Date(cuti.cuti_end).getMonth())
+                          ? 'Tidak Praktik tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric'}) + ' s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
+                          : 'Tidak Praktik tgl ' + new Date(cuti.cuti_start).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'}) + ' s.d. ' + new Date(cuti.cuti_end).toLocaleDateString('id-ID', { day: 'numeric', month: 'long'})
                       : 'Tidak Praktik'
                     }
                   </strong>
