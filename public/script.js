@@ -29,13 +29,15 @@ async function fetchData() {
 // Panggil fungsi untuk mengambil data saat pertama kali
 fetchData();
 
+setInterval(fetchData, 15 * 60 * 1000); // Fetch data setiap 15 menit
+
 // Fungsi untuk membuat chunk data.
 function chunkArray(array, chunkSize) {
-    const result = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-        result.push(array.slice(i, i + chunkSize));
-    }
-    return result;
+  const result = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+      result.push(array.slice(i, i + chunkSize));
+  }
+  return result;
 }
 
 // Fungsi untuk membuat slider HTML dari data dokter.
