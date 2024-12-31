@@ -29,8 +29,6 @@ async function fetchData() {
 // Panggil fungsi untuk mengambil data saat pertama kali
 fetchData();
 
-setInterval(fetchData, 15 * 60 * 1000); // Fetch data setiap 15 menit
-
 // Fungsi untuk membuat chunk data.
 function chunkArray(array, chunkSize) {
   const result = [];
